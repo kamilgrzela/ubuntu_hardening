@@ -87,7 +87,7 @@ for mount_point in "${!PARTITIONS[@]}"; do
         sudo cp /etc/fstab /etc/fstab.bak
 
         # Find line number with matching mount point
-        line_num=$(grep -nE "[[:space:]]$mount_point[[:space:]]" /etc/fstab | cut -d: -f1)
+        line_num=$(grep -nE "^[^#].*[[:space:]]$mount_point[[:space:]]" /etc/fstab | head -n 1 | cut -d: -f1)
 
         if [[ -n "$line_num" ]]; then
           old_line=$(sed -n "${line_num}p" /etc/fstab)
